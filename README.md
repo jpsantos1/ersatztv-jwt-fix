@@ -1,6 +1,10 @@
-# ErsatzTV
+# ErsatzTV (Community Fork)
 
-ErsatzTV lets you transform your media library into a personalized, live TV experience - complete with EPG, channel scheduling, and seamless streaming to all your devices. Rediscover your content, your way.
+ErsatzTV lets you transform your media library into a personalized, live TV experience — complete with EPG, channel scheduling, and seamless streaming to all your devices.
+
+This repository is a **community-maintained fork** of the original ErsatzTV project, which is currently archived.
+
+It includes fixes and improvements to keep the project usable in modern setups.
 
 [![contact](https://img.shields.io/badge/contact_us-510b80?style=for-the-badge)](https://ersatztv.org/contact)
 [![features](https://img.shields.io/badge/vote_on_features-darkgreen?style=for-the-badge)](https://features.ersatztv.org/)
@@ -8,14 +12,66 @@ ErsatzTV lets you transform your media library into a personalized, live TV expe
 
 ![epg-example](https://ersatztv.org/images/home/epg-example.png)
 
-## How It Works
+---
+
+# Important Notice
+
+The original ErsatzTV repository has been **archived** and is no longer actively maintained.
+
+This fork exists to:
+
+- maintain compatibility with modern environments
+- fix bugs affecting real-world deployments
+- continue improving the project for the community
+
+All credit for the original work belongs to the ErsatzTV maintainers and contributors.
+
+---
+
+# Fixes in this Fork
+
+### JWT + HLS Streaming Fix
+
+When JWT authentication is enabled (`JWT__ISSUERSIGNINGKEY`), HLS players request the playlist with an `access_token` query parameter.
+
+However, the original implementation generated segment URLs without propagating this token.
+
+Example before:
+/iptv/hls-direct/1.ts?index=1
+
+
+This caused segment requests to fail with:
+
+
+401 Unauthorized
+
+
+Example after:
+
+
+/iptv/hls-direct/1.ts?index=1&access_token=TOKEN
+
+
+This change allows authenticated playback with IPTV and HLS players that do not support sending Authorization headers for segment requests.
+
+Tested successfully with:
+
+- IPTV Smarters
+- HLS players
+- JWT-protected IPTV streams
+
+---
+
+# How It Works
 
 1. **Install ErsatzTV**: Download and set up the server on your system.
 2. **Add Your Media**: Connect your media libraries and collections.
 3. **Create Channels**: Design and schedule your own live channels.
 4. **Stream Anywhere**: Watch on any device with IPTV and EPG support.
 
-## Key Features
+---
+
+# Key Features
 
 - **Custom channels**: Create and schedule your own live TV channels.
 - **IPTV & EPG**: Stream with IPTV and Electronic Program Guide support.
@@ -24,11 +80,27 @@ ErsatzTV lets you transform your media library into a personalized, live TV expe
 - **Music & Subtitles**: Mix music videos and enjoy subtitle support.
 - **Open Source**: Free, open, and community-driven project.
 
-## Documentation
+---
 
-Documentation is available at [ersatztv.org](https://ersatztv.org/docs/).
+# Documentation
 
-## License
+Documentation is available at:
 
-This project is inspired by [pseudotv-plex](https://github.com/DEFENDORe/pseudotv) and
-the [dizquetv](https://github.com/vexorian/dizquetv) fork and is released under the [zlib license](LICENSE).
+https://ersatztv.org/docs/
+
+---
+
+# Credits
+
+This project is inspired by:
+
+- https://github.com/DEFENDORe/pseudotv-plex
+- https://github.com/vexorian/dizquetv
+
+---
+
+# License
+
+This project is released under the **zlib license**.
+
+See the [LICENSE](LICENSE) file for details.

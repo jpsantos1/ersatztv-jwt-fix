@@ -1,4 +1,4 @@
-﻿using ErsatzTV.Core;
+using ErsatzTV.Core;
 using ErsatzTV.Core.Domain;
 using ErsatzTV.Core.Interfaces.Repositories;
 using ErsatzTV.FFmpeg.OutputFormat;
@@ -71,13 +71,17 @@ public class GetHlsPlaylistByChannelNumberHandler :
 
         long index = GetIndexForChannel(parameters.Channel, parameters.PlayoutItem);
         double timeRemaining = Math.Abs((parameters.PlayoutItem.FinishOffset - now).TotalSeconds);
+        string tokenQuery = string.IsNullOrWhiteSpace(request.AccessToken)
+    ? ""
+    : $"&access_token={request.AccessToken}";
+
         return $@"#EXTM3U
 #EXT-X-VERSION:3
 #EXT-X-TARGETDURATION:10
 #EXT-X-MEDIA-SEQUENCE:{index}
 #EXT-X-DISCONTINUITY
 #EXTINF:{timeRemaining:F2},
-{request.Scheme}://{request.Host}/{endpoint}/{request.ChannelNumber}{extension}?index={index}{mode}
+{request.Scheme}://{request.Host}/{endpoint}/{request.ChannelNumber}{extension}?index={index}{mode}{tokenQuery}
 ";
     }
 

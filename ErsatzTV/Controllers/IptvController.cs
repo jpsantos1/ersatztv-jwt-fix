@@ -262,7 +262,7 @@ public class IptvController : StreamingControllerBase
                             Request.Scheme,
                             Request.Host.ToString(),
                             channelNumber,
-                            mode))
+                            mode, Request.Query["access_token"]))
                     .Map(r => r.Match<IActionResult>(
                         playlist => Content(playlist, "application/vnd.apple.mpegurl"),
                         error => BadRequest(error.Value)));
