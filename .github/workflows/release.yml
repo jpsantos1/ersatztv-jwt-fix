@@ -18,8 +18,6 @@ jobs:
           - linux-arm64
           - linux-arm
           - win-x64
-          - osx-x64
-          - osx-arm64
 
     steps:
 
