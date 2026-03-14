@@ -1,4 +1,4 @@
-name: Release
+name: Release ARM
 
 on:
   push:
@@ -14,10 +14,8 @@ jobs:
     strategy:
       matrix:
         runtime:
-          - linux-x64
-          - linux-arm64
           - linux-arm
-          - win-x64
+          - linux-arm64
 
     steps:
 
@@ -31,7 +29,7 @@ jobs:
 
       - name: Publish
         run: |
-          dotnet publish src/ErsatzTV/ErsatzTV.csproj \
+          dotnet publish ErsatzTV/ErsatzTV.csproj \
             -c Release \
             -r ${{ matrix.runtime }} \
             --self-contained true \
